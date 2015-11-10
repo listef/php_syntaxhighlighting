@@ -1,0 +1,12 @@
+/*
+ * styles for SyntaxHighlight.php
+ *
+ */
+/*code{word-wrap:break-word;color:black}*/
+.html_attr{color:#8A2BE2}
+.N{ color:#F2C47F; } /* Numbers */
+.html_data,.S{ color:#DC143C; } /* Strings */
+.C{ color:#838383; font-style:italic; } /* Comments */
+.html_tag,.K{ color:#4169E1; } /* Keywords */
+.V{ color:#4EC3BD; } /* Vars */
+.D{ color:#FF9A5D; } /* Defines */

@@ -17,6 +17,7 @@ where the optional `$lang` is one of
 * "html"
 * "php"
 * "css"
+If no language is specified genericg syntax highligtning takes place.
 
 **_Example:_**
 ```

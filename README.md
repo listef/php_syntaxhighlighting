@@ -1,5 +1,3 @@
-home sweet home
-
 ### Syntax Highlightning Class for PHP
 
 This is an modified and extended PHP syntax highlightning class originally published in a blog post called [Generic Syntax Highlighting with Regular Expressions](http://phoboslab.org/log/2007/08/generic-syntax-highlighting-with-regular-expressions "Generic Syntax Highlighting with Regular Expressions") by Dominic Szablewski.

@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Somewhat modified and extended PHP syntax highlightning class
+ * Somewhat modified and extended PHP syntax highlighting class
  * with a little help from various answers on stackoverflow.com
- * by Stefan Liehmann (limi@limi.eu)
+ * by Stefan Liehmann <limi@limi.eu>
  * Original:
  * Generic Syntax Highlighting with Regular Expressions
  * http://phoboslab.org/log/2007/08/generic-syntax-highlighting-with-regular-expressions
- * by Dominic Szablewski (mail@phoboslab.org)
+ * by Dominic Szablewski <mail@phoboslab.org>
  */
 class SyntaxHighlight {
 

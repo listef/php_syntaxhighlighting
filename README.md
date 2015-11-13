@@ -1,6 +1,6 @@
 ### Syntax Highlightning Class for PHP
 
-This is an modified and extended PHP syntax highlightning class originally published in a blog post called [Generic Syntax Highlighting with Regular Expressions](http://phoboslab.org/log/2007/08/generic-syntax-highlighting-with-regular-expressions "Generic Syntax Highlighting with Regular Expressions") by Dominic Szablewski.
+This is an modified and extended PHP syntax highlighting class originally published in a blog post called [Generic Syntax Highlighting with Regular Expressions](http://phoboslab.org/log/2007/08/generic-syntax-highlighting-with-regular-expressions "Generic Syntax Highlighting with Regular Expressions") by Dominic Szablewski.
 
 **_Changes are:_**
 * special functions for HTML, CSS and PHP
@@ -17,7 +17,7 @@ where the optional `$lang` is one of
 * "html"
 * "php"
 * "css"
-If no language is specified genericg syntax highligtning takes place.
+If no language is specified genericg syntax highligting takes place.
 
 **_Example:_**
 ```

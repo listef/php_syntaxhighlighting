@@ -3,7 +3,7 @@
 /*
  * Somewhat modified and extended PHP syntax highlighting class
  * with a little help from various answers on stackoverflow.com
- * by Stefan Liehmann <limi@limi.eu>
+ * by Stefan Liehmann <listef@listef.de>
  * Original:
  * Generic Syntax Highlighting with Regular Expressions
  * http://phoboslab.org/log/2007/08/generic-syntax-highlighting-with-regular-expressions
@@ -69,18 +69,19 @@ class SyntaxHighlight {
 			}
 			else
 				$out.=htmlspecialchars($match[5]);
-				//$out.=$match[5];
 		}
 		// handle doctype
-		$out = preg_replace("/(<!doctype.*?>)|(&lt;!doctype.*?&gt;)|(&amp;lt;!doctype.*?&amp;gt;)/i",
-							"<span class=\"html_tag\">$0</span>", $out);
+		$out = preg_replace_callback("/(<!doctype.*?>)|(&lt;!doctype.*?&gt;)|(&amp;lt;!doctype.*?&amp;gt;)/i",
+						function ($match) { return "<span class=\"html_tag\">$match[0]</span>"; },
+                                                $out
+                                         );
 
 		return $out ? trim($out) : $s;
 
 	}
 	/*
 	 * Trys to give CSS section names, keys, values and comments different HTML classes
-	 * by Stefan Liehmann (limi@limi.eu)
+	 * by Stefan Liehmann (listef@listef.de)
 	 * idea from: http://stackoverflow.com/questions/3618381/parse-a-css-file-with-php
 	 *
 	 * Known issue:
@@ -125,7 +126,8 @@ class SyntaxHighlight {
 	}
 	/*
 	 * - original function by Dominic Szablewski (mail@phoboslab.org)
-	 * - changes by Stefan Liehmann (limi@limi.eu):
+	 * - changes by Stefan Liehmann (listef@listef.de):
+	 * 		· use 'preg_replace_callback' for PHP7 compatibility
 	 * 		· added some keywords
 	 * 		· sorted keywords alphabetically
 	 * 		· added rule for PHP start end end tags
@@ -135,6 +137,7 @@ class SyntaxHighlight {
 
         // Workaround for escaped backslashes
         $s = str_replace( '\\\\','\\\\<e>', $s );
+        $tokens = array(); // This array will be filled from the regexp-callback
 
         $regexp = array(
             // Comments/Strings
@@ -144,22 +147,22 @@ class SyntaxHighlight {
                 \#.*?\n|
                 (?<!\\\)&quot;.*?(?<!\\\)&quot;|
                 (?<!\\\)\'(.*?)(?<!\\\)\'
-            )/isex'
-            => 'self::replaceId($tokens,\'$1\')',
+            )/isx'
+            => function($matches) use (&$tokens) {return self::replaceId($tokens,$matches[1]);},
 
             // Numbers (also look for Hex)
             '/(?<!\w)(
                 0x[\da-f]+|
                 \d+
             )(?!\w)/ix'
-            => '<span class="N">$1</span>',
+            => function($matches){return '<span class="N">'.$matches[1].'</span>';},
 
             // Make the bold assumption that an all uppercase word has a
             // special meaning
             '/(?<!\w|>)(
                 [A-Z_0-9]{2,}
             )(?!\w)/x'
-            => '<span class="D">$1</span>',
+            => function($matches){return '<span class="D">'.$matches[1].'</span>';},
 
             // Keywords
             '/(?<!\w|\$|\%|\@|>)('
@@ -189,21 +192,24 @@ class SyntaxHighlight {
 				// Apache config
 				.'RewriteEngine|RewriteRule|ErrorDocument
             )(?!\w|=")/ix'
-            => '<span class="K">$1</span>',
+            => function($matches){return '<span class="K">'.$matches[1].'</span>';},
 
             // PHP/Perl-Style Vars: $var, %var, @var
             '/(?<!\w)(
                 (\$|\%|\@)(\-&gt;|\w)+
             )(?!\w)/ix'
-            => '<span class="V">$1</span>',
+            => function($matches){return '<span class="V">'.$matches[1].'</span>';},
 
             // PHP start and end tags
             '/(<\?php)|(&lt;\?php)|(&amp;lt;\?php)|(\?>)|(\?&gt;)|(\?&amp;gt;)/ix'
-            => '<span class="D">$0</span>'
+            => function($matches){return '<span class="D">'.$matches[0].'</span>';}
         );
 
-        $tokens = array(); // This array will be filled from the regexp-callback
-        $s = preg_replace( array_keys($regexp), array_values($regexp), $s );
+		foreach($regexp as $key=>$value) {
+			$s = preg_replace_callback( $key,
+										$value,
+										$s );
+		}
 
         // Paste the comments and strings back in again
         $s = str_replace( array_keys($tokens), array_values($tokens), $s );

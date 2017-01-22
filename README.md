@@ -3,6 +3,7 @@
 This is an modified and extended PHP syntax highlighting class originally published in a blog post called [Generic Syntax Highlighting with Regular Expressions](http://phoboslab.org/log/2007/08/generic-syntax-highlighting-with-regular-expressions "Generic Syntax Highlighting with Regular Expressions") by Dominic Szablewski.
 
 **_Changes are:_**
+* use `preg_replace_callback` for PHP7 compatibility
 * special functions for HTML, CSS and PHP
 * added a bunch of keywords
 * sorted keywords alphabetically
